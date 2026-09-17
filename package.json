@@ -1,0 +1,7 @@
+{
+  "name": "abdelnasser-gm-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone HTML, CSS and JavaScript recreation of Abdelnasser GM's Canva portfolio",
+  "scripts": { "start": "node server.js", "check": "node --check script.js && node --check server.js" }
+}
