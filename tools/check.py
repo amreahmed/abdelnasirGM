@@ -8,8 +8,8 @@ html = (root / 'index.html').read_text(encoding='utf-8')
 refs = set(re.findall(r'assets/[^"<> ]+', html))
 missing = [name for name in refs if not (root / name).is_file()]
 assert not missing, missing
-assert html.count('<section ') == 7
-assert html.count('<video ') == 16
+assert html.count('<section ') == 9
+assert html.count('<video ') == 20
 assert html.count('class="post-card"') == 12
 assert html.count('class="caption-note"') == 12
 assert 'class="artwork"' not in html
@@ -40,4 +40,4 @@ if '--static' not in sys.argv:
         assert response.status == 206
         assert len(response.read()) == 100
     print('PASS: local preview HTTP range/seek support.')
-print(f'PASS: {len(refs)} local references; local fonts/background; 7 native sections; 12 HTML caption cards; 16 complete MP4 containers.')
+print(f'PASS: {len(refs)} local references; local fonts/background; 9 native sections; 12 HTML caption cards; 20 complete MP4 containers.')

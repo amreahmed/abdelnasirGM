@@ -54,6 +54,45 @@ function openViewer(trigger) {
 document.querySelectorAll('.watch-video').forEach(button => {
   button.addEventListener('click', () => openViewer(button));
 });
+
+function openPostViewer(trigger) {
+  lastTrigger = trigger;
+  previews.forEach(video => video.pause());
+  title.textContent = trigger.dataset.title;
+  content.replaceChildren();
+
+  const card = trigger.closest('.post-card');
+  const modalWrap = document.createElement('div');
+  modalWrap.className = 'viewer-post-modal';
+
+  const imgBox = document.createElement('div');
+  imgBox.className = 'viewer-post-img';
+  const origImg = trigger.parentElement.querySelector('img');
+  if (origImg) {
+    const clonedImg = origImg.cloneNode(true);
+    imgBox.append(clonedImg);
+  }
+
+  const captionBox = document.createElement('div');
+  captionBox.className = 'viewer-post-caption';
+  const captionEl = card.querySelector('.caption-note');
+  if (captionEl) {
+    captionBox.setAttribute('lang', captionEl.getAttribute('lang') || 'ar');
+    captionBox.setAttribute('dir', captionEl.getAttribute('dir') || 'rtl');
+    captionBox.innerHTML = captionEl.innerHTML;
+  }
+
+  modalWrap.append(imgBox, captionBox);
+  content.append(modalWrap);
+
+  document.body.classList.add('viewer-open');
+  viewer.showModal();
+  viewer.querySelector('.close-viewer').focus();
+}
+
+document.querySelectorAll('.view-post').forEach(button => {
+  button.addEventListener('click', () => openPostViewer(button));
+});
 viewer.querySelector('.close-viewer').addEventListener('click', () => viewer.close());
 viewer.addEventListener('click', event => {
   if (event.target !== viewer) return;

@@ -25,10 +25,10 @@ The portrait uses the exact original photo pixels, isolated using CSS clipping. 
 ## Layout and controls
 
 - Desktop: four videos and four social cards per row.
-- Tablet: two social cards per row.
-- Phone: two videos per row, one social card per row, readable biography and skills.
-- Select a video to play it with sound, seeking, and fullscreen controls.
-- Escape closes the video dialog and returns focus.
+- Tablet: two to four cards per row.
+- Phone: two videos per row, two social cards per row, readable biography and skills.
+- Select a video or post card to view it in full size with sound, seeking, or zoom.
+- Escape closes the dialog and returns focus.
 - Reduced-motion preferences disable automatic previews.
 
 ## Hosting

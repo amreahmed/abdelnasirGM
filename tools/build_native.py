@@ -12,7 +12,7 @@ def heading(arabic, english, level=2, extra=''):
       <p>{escape(english)}</p>
     </header>'''
 
-icons = '''<span class="post-actions" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-4 7l5 3-1-6a8 8 0 0 0 0-4Z"/></svg><svg class="heart" viewBox="0 0 24 24"><path d="M12 21 3 12C-3 5 6-2 12 5c6-7 15 0 9 7Z"/></svg><svg viewBox="0 0 24 24"><path d="M5 3h14v18l-7-5-7 5Z"/></svg></span>'''
+icons = '''<div class="post-actions" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-4 7l5 3-1-6a8 8 0 0 0 0-4Z"/></svg><svg class="heart" viewBox="0 0 24 24"><path d="M12 21 3 12C-3 5 6-2 12 5c6-7 15 0 9 7Z"/></svg><svg viewBox="0 0 24 24"><path d="M5 3h14v18l-7-5-7 5Z"/></svg></div>'''
 posts = {
   'food': [
     ('صينية العيلة — أهل اليمن','العيلة تتجمع،\nوالصينية تكفي.\nقعدة فيها كل اللي بتحبهم،\nوصينية عليها كل اللي بتحبوه.\nصينية العيلة من أهل اليمن...\nطعم يجمع الكل.'),
@@ -89,7 +89,7 @@ for english,arabic,description in skills:
     html.append(f'<div class="skill-row"><dt>{escape(english)}</dt><dd lang="ar" dir="rtl"><strong>{escape(arabic)} :</strong><p>{escape(description)}</p></dd></div>')
 html.append('</dl></section>')
 
-for group_index, group in enumerate(['food','beauty','fashion','finance']):
+for group_index, group in enumerate(['food','beauty','fashion','finance','personal']):
     entry = next(s for s in media if s[0]==group)
     english,arabic = entry[1].split(' / ')
     html.append(f'<section class="work-section section-shell" id="{group}" aria-label="{escape(english)}">')
@@ -107,22 +107,51 @@ for group_index, group in enumerate(['food','beauty','fashion','finance']):
     html.append('</div>')
     if group in posts:
         source = next(s for s in media if s[0]==group+'-posts')[2]
-        # CSS clips the exact original campaign images. Frames and captions are HTML/CSS.
+        # CSS clips the exact original campaign images.
         xs, y, size, total = ([212,616,1014,1417],174,318,1920) if group=='beauty' else ([176,513,845,1181],145,265,1600)
         html.append(f'<div class="post-grid" aria-label="{escape(english)} social media designs">')
         for n,(label,caption) in enumerate(posts[group]):
             direction='ltr' if group=='fashion' else 'rtl'
             lang='en' if group=='fashion' else 'ar'
             html.append(f'''<article class="post-card">
-              <figure class="social-frame">
-                <div class="post-top" aria-hidden="true"><span>•••</span><span class="post-plus">+</span></div>
-                <div class="campaign-photo"><img src="assets/{source}.png" alt="{escape(label)}" loading="lazy" decoding="async" style="width:{total/size*100:.5f}%;left:{-xs[n]/size*100:.5f}%;top:{-y/size*100:.5f}%"></div>
-                {icons}
-              </figure>
-              <div class="caption-note" lang="{lang}" dir="{direction}"><span class="paper-clips" aria-hidden="true"></span><p>{escape(caption).replace(chr(10),'<br>')}</p></div>
+              <div class="campaign-photo">
+                <img src="assets/{source}.png" alt="{escape(label)}" decoding="async" style="width:{total/size*100:.5f}%;left:{-xs[n]/size*100:.5f}%;top:{-y/size*100:.5f}%">
+                <button class="view-post" type="button" data-title="{escape(label)}" aria-label="View {escape(label)}"><span aria-hidden="true">🔍</span></button>
+              </div>
+              {icons}
+              <div class="caption-note" lang="{lang}" dir="{direction}">
+                <h4 class="post-title">{escape(label)}</h4>
+                <p>{escape(caption).replace(chr(10),'<br>')}</p>
+              </div>
             </article>''')
         html.append('</div>')
     html.append('</section>')
+
+contact_entry = next(s for s in media if s[0]=='contact')
+c_english, c_arabic = contact_entry[1].split(' / ')
+html.append(f'''    <section class="contact-section section-shell" id="contact" aria-label="{escape(c_english)}">
+''' + heading(c_arabic, c_english) + '''
+      <div class="contact-copy" lang="ar" dir="rtl">
+        <p>لسه في حاجات كتير نفسي أعملها، وأحوّلها لمحتوى يتشاف ويتسمع ويسيب أثر<br>ولو حابّ تعرف أكثر، هتلاقيني هنا:</p>
+      </div>
+      <div class="contact-links" aria-label="Communication channels">
+        <a class="contact-btn" href="https://wa.me/201220431631" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp: 01220431631">
+          <img src="assets/5e690065b26c42b95f43d0d81c914fc0.png" alt="WhatsApp: 01220431631" width="442" height="67">
+        </a>
+        <a class="contact-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=abdelnassergm22@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email: abdelnassergm22@gmail.com">
+          <img src="assets/868a830d688c22304b92962997667ad0.png" alt="Email: abdelnassergm22@gmail.com" width="565" height="67">
+        </a>
+        <a class="contact-btn" href="https://www.instagram.com/abdelnassergm22/" target="_blank" rel="noopener noreferrer" aria-label="Instagram: abdelnassergm22">
+          <img src="assets/a6878bf4b7e51b9b9c4fc76ca250bb74.png" alt="Instagram: abdelnassergm22" width="475" height="67">
+        </a>
+        <a class="contact-btn" href="https://www.tiktok.com/@abdelnassergm" target="_blank" rel="noopener noreferrer" aria-label="TikTok: abdelnassergm">
+          <img src="assets/99fc5c69b169b65c380db4a80806d416.png" alt="TikTok: abdelnassergm" width="407" height="67">
+        </a>
+      </div>
+      <div class="contact-prompt" lang="ar" dir="rtl" aria-hidden="true">
+        <img src="assets/6644ba2009ecedee7f0dedd3ae75638c.png" alt="اضغط على أي وسيلة تواصل عشان تتواصل معايا" width="686" height="72">
+      </div>
+    </section>''')
 
 html.append('''  </main>
   <button class="back-to-top" type="button" aria-label="Back to top" hidden>↑</button>
@@ -134,4 +163,5 @@ html.append('''  </main>
 </html>
 ''')
 (ROOT/'index.html').write_text('\n'.join(html),encoding='utf-8')
-print('Built native HTML: selectable text, 7 flowing sections, 16 videos, 12 individual social cards.')
+print('Built native HTML: selectable text, 9 flowing sections, 20 videos, 12 individual social cards.')
+
